@@ -12,6 +12,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
 
 interface Props {
   /**
@@ -23,6 +25,13 @@ interface Props {
 
 const drawerWidth = 240;
 const navItems = ['Home', 'About', 'Contact'];
+const darkTheme = createTheme({
+  palette: {
+    primary: {
+      main: 'rgb(88,142,55)',
+    },
+  },
+});
 
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
@@ -35,7 +44,7 @@ export default function DrawerAppBar(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-      NEWS DEMO WEB APP
+        NEWS DEMO WEB APP
       </Typography>
       <Divider />
       <List>
@@ -52,35 +61,39 @@ export default function DrawerAppBar(props: Props) {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
+
+
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar component="nav">
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-            NEWS DEMO WEB APP
-          </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
-            ))}
-          </Box>
-        </Toolbar>
-      </AppBar>
+      <ThemeProvider theme={darkTheme}>
+        <AppBar component="nav">
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="contained"
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, color:"white" }}
+            >
+              NEWS DEMO WEB APP
+            </Typography>
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+              {navItems.map((item) => (
+                <Button key={item} sx={{ color: '#fff' }}>
+                  {item}
+                </Button>
+              ))}
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </ThemeProvider>
       <Box component="nav">
         <Drawer
           container={container}
@@ -97,7 +110,7 @@ export default function DrawerAppBar(props: Props) {
         >
           {drawer}
         </Drawer>
-      </Box>      
+      </Box>
     </Box>
   );
 }
